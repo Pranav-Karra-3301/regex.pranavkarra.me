@@ -2,8 +2,20 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Regex Mastery Course',
-  description: 'Complete course to master regular expressions',
+  title: 'Regular Expressions',
+  description: 'For CMPSC 461 at Penn State',
+  icons: {
+    icon: '/favicon.ico',
+  },
+  openGraph: {
+    title: 'Regular Expressions',
+    description: 'For CMPSC 461 at Penn State',
+    images: [
+      {
+        url: '/og.png',
+      },
+    ],
+  },
 }
 
 export default function RootLayout({

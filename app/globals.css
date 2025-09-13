@@ -10,7 +10,47 @@ body {
   color: #2d2d2d;
   min-height: 100vh;
   display: flex;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode */
+.dark body {
+  background: #474238;
+  color: #f5f5f5;
+}
+
+/* Dark mode toggle */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.dark-mode-toggle:hover {
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.dark .dark-mode-toggle {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(240, 36, 14, 0.3);
+}
+
+.dark .dark-mode-toggle:hover {
+  background: rgba(0, 0, 0, 0.5);
 }
 
 /* Sidebar Navigation */
@@ -38,6 +78,20 @@ body {
   position: sticky;
   top: 0;
   z-index: 10;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.sidebar-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 8px;
 }
 
 .sidebar-title {
@@ -45,11 +99,32 @@ body {
   font-weight: 600;
   color: #2d2d2d;
   margin-bottom: 8px;
+  transition: color 0.3s ease;
 }
 
 .sidebar-subtitle {
   font-size: 12px;
   color: #999;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode sidebar styles */
+.dark .sidebar {
+  background: #3a352e;
+  border-right: 1px solid #6b6356;
+}
+
+.dark .sidebar-header {
+  background: #2d2923;
+  border-bottom: 1px solid #6b6356;
+}
+
+.dark .sidebar-title {
+  color: #f5f5f5;
+}
+
+.dark .sidebar-subtitle {
+  color: #b8b8b8;
 }
 
 .module {
@@ -283,6 +358,11 @@ body {
   color: #d63384;
 }
 
+.dark .concept-content code {
+  background: #2d2923;
+  color: #ffc107;
+}
+
 /* Input Section */
 .input-wrapper {
   position: relative;
@@ -332,6 +412,11 @@ body {
   color: #999;
 }
 
+.dark .input-label {
+  background: #474238;
+  color: #b8b8b8;
+}
+
 /* Hint System */
 .hint-box {
   margin-top: 12px;
@@ -345,6 +430,12 @@ body {
   transform: translateY(-10px);
   transition: all 0.3s ease;
   display: none;
+}
+
+.dark .hint-box {
+  background: rgba(255, 193, 7, 0.2);
+  color: #f5f5f5;
+  border-left: 3px solid #ffc107;
 }
 
 .hint-box.visible {
@@ -365,6 +456,11 @@ body {
   align-items: center;
   gap: 6px;
   animation: slideIn 0.3s ease;
+}
+
+.dark .success-hint {
+  background: rgba(76, 175, 80, 0.2);
+  color: #f5f5f5;
 }
 
 @keyframes slideIn {
@@ -389,6 +485,12 @@ body {
   color: #495057;
 }
 
+.dark .keyboard-shortcut {
+  background: #3a352e;
+  border: 1px solid #6b6356;
+  color: #f5f5f5;
+}
+
 /* Test Cases */
 .test-section {
   margin-bottom: 40px;
@@ -401,6 +503,10 @@ body {
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.dark .test-header {
+  color: #b8b8b8;
 }
 
 .test-string {
@@ -437,6 +543,10 @@ body {
 .test-string-text {
   flex: 1;
   color: #2d2d2d;
+}
+
+.dark .test-string-text {
+  color: #f5f5f5;
 }
 
 .test-string-status {
@@ -508,6 +618,11 @@ body {
   font-size: 12px;
 }
 
+.dark .keyboard-hint {
+  background: #3a352e;
+  color: #f5f5f5;
+}
+
 /* Success Message */
 .success-overlay {
   position: fixed;
@@ -544,6 +659,12 @@ body {
   margin: 0 auto;
 }
 
+.dark .success-modal {
+  background: #3a352e;
+  border: 1px solid #6b6356;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
 .success-overlay.show .success-modal {
   transform: scale(1);
 }
@@ -562,11 +683,19 @@ body {
   margin-bottom: 12px;
 }
 
+.dark .success-title {
+  color: #f5f5f5;
+}
+
 .success-subtitle {
   font-size: 16px;
   color: #666;
   margin-bottom: 32px;
   line-height: 1.4;
+}
+
+.dark .success-subtitle {
+  color: #b8b8b8;
 }
 
 /* Attribution Footer */
@@ -585,6 +714,12 @@ body {
   transition: opacity 0.3s ease;
 }
 
+.dark .attribution {
+  background: rgba(58, 53, 46, 0.9);
+  color: #b8b8b8;
+  border: 1px solid #6b6356;
+}
+
 .attribution:hover {
   opacity: 0.7;
 }
@@ -592,6 +727,10 @@ body {
 .attribution a {
   color: #666;
   text-decoration: none;
+}
+
+.dark .attribution a {
+  color: #f5f5f5;
 }
 
 .attribution a:hover {
@@ -684,4 +823,126 @@ body {
     padding-left: max(40px, env(safe-area-inset-left) + 20px);
     padding-right: max(40px, env(safe-area-inset-right) + 20px);
   }
+}
+
+/* Additional Dark Mode Styles */
+.dark .progress-text {
+  color: #b8b8b8;
+}
+
+.dark .progress-bar {
+  background: #5c5448;
+}
+
+.dark .progress-fill {
+  background: #F0240E;
+}
+
+.dark .lesson-title {
+  color: #f5f5f5;
+}
+
+.dark .lesson-description {
+  color: #b8b8b8;
+}
+
+.dark .concept-box {
+  background: #3a352e;
+  border: 1px solid #5c5448;
+}
+
+.dark .concept-title {
+  color: #F0240E;
+}
+
+.dark .concept-content {
+  color: #f5f5f5;
+}
+
+.dark .regex-input {
+  background: #3a352e;
+  border: 2px solid #6b6356;
+  color: #f5f5f5;
+}
+
+.dark .regex-input:focus {
+  border-color: #F0240E;
+  box-shadow: 0 0 0 3px rgba(240, 36, 14, 0.2);
+}
+
+.dark .btn {
+  background: #3a352e;
+  color: #f5f5f5;
+  border: 1px solid #6b6356;
+}
+
+.dark .btn:hover {
+  background: #2d2923;
+  border-color: #f5f5f5;
+  transform: translateY(-1px);
+}
+
+.dark .btn.primary {
+  background: #F0240E;
+  color: #474238;
+  border-color: #F0240E;
+}
+
+.dark .btn.primary:hover {
+  background: #d11e0c;
+}
+
+.dark .test-string {
+  background: #3a352e;
+  border: 1px solid #6b6356;
+  color: #f5f5f5;
+}
+
+.dark .test-string.correct {
+  background: rgba(76, 175, 80, 0.2);
+  border-color: #4caf50;
+}
+
+.dark .test-string.incorrect {
+  background: rgba(244, 67, 54, 0.2);
+  border-color: #f44336;
+}
+
+.dark .module-header {
+  background: #2d2923;
+  color: #b8b8b8;
+}
+
+.dark .module-header:hover {
+  background: #3a352e;
+  color: #f5f5f5;
+}
+
+.dark .lesson {
+  color: #b8b8b8;
+}
+
+.dark .lesson:hover {
+  background: #3a352e;
+  color: #f5f5f5;
+}
+
+.dark .lesson.active {
+  background: rgba(240, 36, 14, 0.2);
+  color: #F0240E;
+}
+
+.dark .lesson.completed {
+  color: #4caf50;
+}
+
+.dark .sidebar-toggle {
+  background: rgba(0, 0, 0, 0.3);
+  color: #f5f5f5;
+  border: 1px solid #6b6356;
+}
+
+.dark .sidebar-toggle:hover {
+  background: rgba(0, 0, 0, 0.5);
+  border-color: #f5f5f5;
 }

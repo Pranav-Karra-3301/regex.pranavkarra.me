@@ -10,9 +10,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Regular Expressions',
     description: 'For CMPSC 461 at Penn State',
+    url: 'https://regex.pranavkarra.me',
     images: [
       {
-        url: '/og.png',
+        url: 'https://regex.pranavkarra.me/og.png',
       },
     ],
   },

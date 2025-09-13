@@ -7,6 +7,7 @@ import LessonContent from '@/components/LessonContent';
 import RegexInput, { RegexInputRef } from '@/components/RegexInput';
 import TestStrings from '@/components/TestStrings';
 import SuccessModal from '@/components/SuccessModal';
+import DarkModeToggle from '@/components/DarkModeToggle';
 import { curriculum } from '@/data/curriculum';
 
 export default function Home() {
@@ -136,6 +137,9 @@ export default function Home() {
         <span>☰</span>
         <span>Menu</span>
       </button>
+
+      {/* Dark Mode Toggle */}
+      <DarkModeToggle />
 
       {/* Main Content */}
       <div className={`main-content ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>

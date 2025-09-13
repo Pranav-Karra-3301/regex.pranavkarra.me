@@ -26,8 +26,13 @@ export default function Sidebar({
   return (
     <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`} id="sidebar">
       <div className="sidebar-header">
-        <div className="sidebar-title">Regex Mastery</div>
-        <div className="sidebar-subtitle">Complete Course • 50 Lessons</div>
+        <div className="sidebar-logo-section">
+          <img src="/logo.png" alt="Regular Expressions" className="sidebar-logo" />
+          <div>
+            <div className="sidebar-title">Regular Expressions</div>
+            <div className="sidebar-subtitle">For CMPSC 461 at Penn State</div>
+          </div>
+        </div>
       </div>
       <div id="courseIndex">
         {curriculum.map((module, moduleIdx) => (

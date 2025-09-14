@@ -22,13 +22,17 @@ export default function Home() {
 
   const currentLesson = curriculum[currentModuleIndex].lessons[currentLessonIndex];
 
-  // Load saved progress on mount
+  // Load saved progress and check for mobile on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('completedLessons');
       if (saved) {
         setCompletedLessons(new Set(JSON.parse(saved)));
       }
+
+      // Start with sidebar collapsed on mobile devices
+      const isMobile = window.innerWidth <= 768;
+      setIsSidebarCollapsed(isMobile);
     }
   }, []);
 
@@ -98,7 +102,10 @@ export default function Home() {
   const handleValidationChange = (isSuccess: boolean) => {
     if (isSuccess) {
       markLessonComplete();
-      setShowSuccessModal(true);
+      // Skip showing the modal popup and auto-advance
+      setTimeout(() => {
+        nextLesson();
+      }, 1500);
     }
   };
 
@@ -118,31 +125,21 @@ export default function Home() {
 
   return (
     <>
-      {/* Sidebar */}
-      <Sidebar
-        isCollapsed={isSidebarCollapsed}
-        completedLessons={completedLessons}
-        currentModuleIndex={currentModuleIndex}
-        currentLessonIndex={currentLessonIndex}
-        expandedModules={expandedModules}
-        onToggleModule={toggleModule}
-        onGoToLesson={goToLesson}
-      />
+      <div className="app-container">
+        {/* Sidebar */}
+        <Sidebar
+          isCollapsed={isSidebarCollapsed}
+          completedLessons={completedLessons}
+          currentModuleIndex={currentModuleIndex}
+          currentLessonIndex={currentLessonIndex}
+          expandedModules={expandedModules}
+          onToggleModule={toggleModule}
+          onGoToLesson={goToLesson}
+        />
 
-      {/* Toggle Button */}
-      <button
-        className={`sidebar-toggle ${!isSidebarCollapsed ? 'sidebar-open' : ''}`}
-        onClick={toggleSidebar}
-      >
-        <span>☰</span>
-        <span>Menu</span>
-      </button>
-
-      {/* Dark Mode Toggle */}
-      <DarkModeToggle />
-
-      {/* Main Content */}
-      <div className={`main-content ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+        {/* Main Content */}
+        <div className={`main-content ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+          <div className="main-content-inner">
         {/* Progress Section */}
         <ProgressBar
           currentModuleIndex={currentModuleIndex}
@@ -195,13 +192,27 @@ export default function Home() {
             {!isLastLesson && <span>→</span>}
           </button>
         </div>
+          </div>
+        </div>
       </div>
 
-      {/* Success Overlay */}
-      <SuccessModal
+      {/* Toggle Button */}
+      <button
+        className={`sidebar-toggle ${!isSidebarCollapsed ? 'sidebar-open' : ''}`}
+        onClick={toggleSidebar}
+      >
+        <span>☰</span>
+        <span>Menu</span>
+      </button>
+
+      {/* Dark Mode Toggle */}
+      <DarkModeToggle />
+
+      {/* Success Overlay - Disabled for better UX */}
+      {/* <SuccessModal
         isVisible={showSuccessModal}
         onContinue={handleSuccessContinue}
-      />
+      /> */}
 
       {/* Attribution */}
       <div className="attribution">

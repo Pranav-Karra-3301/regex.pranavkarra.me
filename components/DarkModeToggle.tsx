@@ -26,12 +26,23 @@ export default function DarkModeToggle() {
   };
 
   return (
-    <button
-      className="dark-mode-toggle"
-      onClick={toggleDarkMode}
-      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-    >
-      {isDark ? '☀️' : '🌙'}
-    </button>
+    <div className="theme-toggle-container">
+      <button
+        className={`theme-toggle ${isDark ? 'dark-mode' : 'light-mode'}`}
+        onClick={toggleDarkMode}
+        aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      >
+        <div className="toggle-track">
+          <div className="toggle-thumb">
+            <span className="toggle-icon">
+              {isDark ? '🌙' : '☀️'}
+            </span>
+          </div>
+        </div>
+        <span className="toggle-label">
+          {isDark ? 'Dark' : 'Light'}
+        </span>
+      </button>
+    </div>
   );
 }

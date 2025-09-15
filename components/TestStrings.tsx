@@ -48,35 +48,68 @@ export default function TestStrings({ testStrings, regexPattern }: TestStringsPr
     setTestResults(results);
   }, [regexPattern, testStrings]);
 
+  // Separate test strings into matching and non-matching groups
+  const matchingStrings = testStrings.filter((_, index) => testStrings[index].shouldMatch);
+  const nonMatchingStrings = testStrings.filter((_, index) => !testStrings[index].shouldMatch);
+
+  const renderTestString = (testString: TestString, originalIndex: number) => {
+    const isCorrect = testResults[originalIndex];
+    const hasResult = testResults.length > 0;
+
+    return (
+      <div
+        key={originalIndex}
+        className={`test-string ${
+          testString.shouldMatch ? 'match-expected' : 'no-match-expected'
+        } ${hasResult ? (isCorrect ? 'correct' : 'incorrect') : ''}`}
+      >
+        <span
+          className="test-string-text"
+          dangerouslySetInnerHTML={{
+            __html: escapeHtml(testString.text)
+          }}
+        />
+        <span
+          className={`test-string-status ${hasResult ? 'active' : ''}`}
+        >
+          {testString.shouldMatch ? '✓' : '✗'}
+        </span>
+      </div>
+    );
+  };
+
   return (
     <div className="test-section">
       <div className="test-header">Test Cases</div>
+      <div className="test-explanation">
+        Your regex should <strong>match</strong> the green cases and <strong>NOT match</strong> the gray cases.
+      </div>
       <div id="testStrings">
-        {testStrings.map((testString, index) => {
-          const isCorrect = testResults[index];
-          const hasResult = testResults.length > 0;
-
-          return (
-            <div
-              key={index}
-              className={`test-string ${
-                testString.shouldMatch ? 'match-expected' : 'no-match-expected'
-              } ${hasResult ? (isCorrect ? 'correct' : 'incorrect') : ''}`}
-            >
-              <span
-                className="test-string-text"
-                dangerouslySetInnerHTML={{
-                  __html: escapeHtml(testString.text)
-                }}
-              />
-              <span
-                className={`test-string-status ${hasResult ? 'active' : ''}`}
-              >
-                {testString.shouldMatch ? '✓' : '✗'}
-              </span>
+        {/* Should Match Section */}
+        {matchingStrings.length > 0 && (
+          <div className="test-group">
+            <div className="test-group-header should-match">
+              <span className="test-group-icon">✓</span>
+              <span>Should Match ({matchingStrings.length})</span>
             </div>
-          );
-        })}
+            {testStrings.map((testString, index) =>
+              testString.shouldMatch ? renderTestString(testString, index) : null
+            )}
+          </div>
+        )}
+
+        {/* Should NOT Match Section */}
+        {nonMatchingStrings.length > 0 && (
+          <div className="test-group">
+            <div className="test-group-header should-not-match">
+              <span className="test-group-icon">✗</span>
+              <span>Should NOT Match ({nonMatchingStrings.length})</span>
+            </div>
+            {testStrings.map((testString, index) =>
+              !testString.shouldMatch ? renderTestString(testString, index) : null
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

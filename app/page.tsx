@@ -8,6 +8,7 @@ import RegexInput, { RegexInputRef } from '@/components/RegexInput';
 import TestStrings from '@/components/TestStrings';
 import SuccessModal from '@/components/SuccessModal';
 import DarkModeToggle from '@/components/DarkModeToggle';
+import IntroModal from '@/components/IntroModal';
 import { curriculum } from '@/data/curriculum';
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [regexPattern, setRegexPattern] = useState('');
   const [expandedModules, setExpandedModules] = useState<Set<number>>(new Set([0]));
+  const [showIntroModal, setShowIntroModal] = useState(false);
   const regexInputRef = useRef<RegexInputRef>(null);
 
   const currentLesson = curriculum[currentModuleIndex].lessons[currentLessonIndex];
@@ -28,6 +30,12 @@ export default function Home() {
       const saved = localStorage.getItem('completedLessons');
       if (saved) {
         setCompletedLessons(new Set(JSON.parse(saved)));
+      }
+
+      // Check if user has seen intro
+      const hasSeenIntro = localStorage.getItem('hasSeenIntro');
+      if (!hasSeenIntro) {
+        setShowIntroModal(true);
       }
 
       // Start with sidebar collapsed on mobile devices
@@ -99,13 +107,10 @@ export default function Home() {
     setRegexPattern('');
   };
 
-  const handleValidationChange = (isSuccess: boolean) => {
+  const handleValidationChange = (isSuccess: boolean, wasManualSolution?: boolean) => {
     if (isSuccess) {
       markLessonComplete();
-      // Skip showing the modal popup and auto-advance
-      setTimeout(() => {
-        nextLesson();
-      }, 1500);
+      // Removed automatic lesson advancement - user must manually click Next
     }
   };
 
@@ -123,6 +128,17 @@ export default function Home() {
     setExpandedModules(prev => new Set([...prev, currentModuleIndex]));
   }, [currentModuleIndex]);
 
+  const handleIntroComplete = () => {
+    setShowIntroModal(false);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('hasSeenIntro', 'true');
+    }
+  };
+
+  const restartIntroduction = () => {
+    setShowIntroModal(true);
+  };
+
   return (
     <>
       <div className="app-container">
@@ -135,6 +151,7 @@ export default function Home() {
           expandedModules={expandedModules}
           onToggleModule={toggleModule}
           onGoToLesson={goToLesson}
+          onRestartIntroduction={restartIntroduction}
         />
 
         {/* Main Content */}
@@ -218,6 +235,12 @@ export default function Home() {
       <div className="attribution">
         Made by <a href="https://pranavkarra.me" target="_blank" rel="noopener noreferrer">Pranav Karra</a> and <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">Claude</a> • Studying for CMPSC 461 at Penn State
       </div>
+
+      {/* Intro Modal */}
+      <IntroModal
+        isVisible={showIntroModal}
+        onComplete={handleIntroComplete}
+      />
     </>
   );
 }

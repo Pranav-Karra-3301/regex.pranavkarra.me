@@ -5,7 +5,7 @@ import { Lesson } from '@/data/curriculum';
 
 interface RegexInputProps {
   lesson: Lesson;
-  onValidationChange: (isSuccess: boolean) => void;
+  onValidationChange: (isSuccess: boolean, wasManualSolution?: boolean) => void;
   onPatternChange: (pattern: string) => void;
 }
 
@@ -61,7 +61,7 @@ const RegexInput = forwardRef<RegexInputRef, RegexInputProps>(({ lesson, onValid
       // Second check: is it a valid/acceptable solution?
       if (isValidSolution(inputPattern, lesson.solution)) {
         setInputClass('success');
-        onValidationChange(true);
+        onValidationChange(true, false);
       } else {
         // Matches test cases but isn't the right pattern
         setInputClass('partial');
@@ -154,7 +154,7 @@ const RegexInput = forwardRef<RegexInputRef, RegexInputProps>(({ lesson, onValid
       e.preventDefault();
       // If current pattern is valid, proceed to next lesson
       if (inputClass === 'success') {
-        onValidationChange(true);
+        onValidationChange(true, false);
       }
     }
   };
@@ -171,6 +171,8 @@ const RegexInput = forwardRef<RegexInputRef, RegexInputProps>(({ lesson, onValid
     setPattern(lesson.solution);
     onPatternChange(lesson.solution);
     validateRegex(lesson.solution);
+    // Pass true to indicate this was a manual solution
+    onValidationChange(true, true);
   };
 
   return (

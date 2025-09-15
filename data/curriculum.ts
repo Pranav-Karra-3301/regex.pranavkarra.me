@@ -352,11 +352,11 @@ export const curriculum: Module[] = [
           { text: '12345', shouldMatch: false },
           { text: 'abcd', shouldMatch: false }
         ],
-        solution: '\\d{4}',
+        solution: '^\\d{4}$',
         hints: [
           'Use {n} to match exactly n times',
           'Match exactly 4 digits',
-          'Solution: \\d{4}'
+          'Solution: ^\\d{4}$'
         ]
       },
       {

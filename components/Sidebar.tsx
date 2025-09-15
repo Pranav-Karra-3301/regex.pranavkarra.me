@@ -10,6 +10,7 @@ interface SidebarProps {
   expandedModules: Set<number>;
   onToggleModule: (moduleIdx: number) => void;
   onGoToLesson: (moduleIdx: number, lessonIdx: number) => void;
+  onRestartIntroduction: () => void;
 }
 
 export default function Sidebar({
@@ -19,7 +20,8 @@ export default function Sidebar({
   currentLessonIndex,
   expandedModules,
   onToggleModule,
-  onGoToLesson
+  onGoToLesson,
+  onRestartIntroduction
 }: SidebarProps) {
   let lessonNumber = 1;
 
@@ -33,6 +35,13 @@ export default function Sidebar({
             <div className="sidebar-subtitle">For CMPSC 461 at Penn State</div>
           </div>
         </div>
+        <button
+          className="intro-restart-btn"
+          onClick={onRestartIntroduction}
+          title="Restart Introduction"
+        >
+          ℹ️
+        </button>
       </div>
       <div id="courseIndex">
         {curriculum.map((module, moduleIdx) => (

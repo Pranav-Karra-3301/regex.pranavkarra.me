@@ -275,7 +275,7 @@ export const curriculum: Module[] = [
           { text: 'cat', shouldMatch: false },
           { text: 'the cat', shouldMatch: false }
         ],
-        solution: '\\\\Bcat',
+        solution: '\\Bcat',
         hints: [
           'Use \\B for non-word boundaries',
           'Match "cat" within a word, not at the start',

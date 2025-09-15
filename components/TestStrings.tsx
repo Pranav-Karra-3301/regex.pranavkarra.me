@@ -32,17 +32,15 @@ export default function TestStrings({ testStrings, regexPattern }: TestStringsPr
       return;
     }
 
-    let regex;
-    try {
-      regex = new RegExp(regexPattern);
-    } catch (e) {
-      setTestResults([]);
-      return;
-    }
-
     const results = testStrings.map((testString) => {
-      const matches = regex.test(testString.text);
-      return matches === testString.shouldMatch;
+      try {
+        // Create a fresh regex instance for each test to avoid state persistence
+        const regex = new RegExp(regexPattern);
+        const matches = regex.test(testString.text);
+        return matches === testString.shouldMatch;
+      } catch (e) {
+        return false;
+      }
     });
 
     setTestResults(results);

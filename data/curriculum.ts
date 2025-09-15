@@ -183,7 +183,7 @@ export const curriculum: Module[] = [
           { text: '-', shouldMatch: false },
           { text: '!', shouldMatch: false }
         ],
-        solution: '\\w',
+        solution: '\\\\w',
         hints: [
           'Use the word character class',
           'Matches letters, digits, and underscore',
@@ -201,7 +201,7 @@ export const curriculum: Module[] = [
           { text: 'a', shouldMatch: false },
           { text: '5', shouldMatch: false }
         ],
-        solution: '\\s',
+        solution: '\\\\s',
         hints: [
           'Use the whitespace character class',
           'Matches spaces, tabs, newlines',
@@ -258,7 +258,7 @@ export const curriculum: Module[] = [
           { text: 'category', shouldMatch: false },
           { text: 'scatter', shouldMatch: false }
         ],
-        solution: '\\bcat\\b',
+        solution: '\\\\bcat\\\\b',
         hints: [
           'Use \\b for word boundaries',
           'Match "cat" as a whole word only',
@@ -270,12 +270,12 @@ export const curriculum: Module[] = [
         description: "Match within words, not at boundaries",
         concept: "The <code>\\B</code> assertion matches a non-word boundary - positions where both sides are word characters or both are non-word characters.",
         testStrings: [
-          { text: 'category', shouldMatch: true },
-          { text: 'scatter', shouldMatch: true },
+          { text: 'locate', shouldMatch: true },
+          { text: 'educate', shouldMatch: true },
           { text: 'cat', shouldMatch: false },
           { text: 'the cat', shouldMatch: false }
         ],
-        solution: '\\Bcat',
+        solution: '\\\\Bcat',
         hints: [
           'Use \\B for non-word boundaries',
           'Match "cat" within a word, not at the start',
@@ -299,7 +299,7 @@ export const curriculum: Module[] = [
           { text: 'b', shouldMatch: false },
           { text: 'ba', shouldMatch: false }
         ],
-        solution: 'ab*',
+        solution: '^ab*$',
         hints: [
           'Use * to match zero or more',
           'Match "a" followed by zero or more "b"s',
@@ -352,7 +352,7 @@ export const curriculum: Module[] = [
           { text: '12345', shouldMatch: false },
           { text: 'abcd', shouldMatch: false }
         ],
-        solution: '^\\d{4}$',
+        solution: '^\\\\d{4}$',
         hints: [
           'Use {n} to match exactly n times',
           'Match exactly 4 digits',
@@ -370,7 +370,7 @@ export const curriculum: Module[] = [
           { text: '1', shouldMatch: false },
           { text: '12345', shouldMatch: false }
         ],
-        solution: '^\\d{2,4}$',
+        solution: '^\\\\d{2,4}$',
         hints: [
           'Use {n,m} to match a range of occurrences',
           'Match 2 to 4 digits (use anchors for exact match)',
@@ -410,7 +410,7 @@ export const curriculum: Module[] = [
           { text: 'a', shouldMatch: false },
           { text: 'abb', shouldMatch: false }
         ],
-        solution: '(ab)+',
+        solution: '^(ab)+$',
         hints: [
           'Use parentheses to group patterns',
           'Match one or more occurrences of "ab"',
@@ -460,7 +460,7 @@ export const curriculum: Module[] = [
           { text: '24-12-25', shouldMatch: false },
           { text: 'not-a-date', shouldMatch: false }
         ],
-        solution: '(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})',
+        solution: '(?<year>\\\\d{4})-(?<month>\\\\d{2})-(?<day>\\\\d{2})',
         hints: [
           'Use (?<name>) to create named groups',
           'Match dates in YYYY-MM-DD format',
@@ -477,7 +477,7 @@ export const curriculum: Module[] = [
           { text: 'the cat', shouldMatch: false },
           { text: 'that this', shouldMatch: false }
         ],
-        solution: '\\b(\\w+)\\s+\\1\\b',
+        solution: '\\\\b(\\\\w+)\\\\s+\\\\1\\\\b',
         hints: [
           'Use \\1 to reference the first capture group',
           'Match repeated words',
@@ -500,7 +500,7 @@ export const curriculum: Module[] = [
           { text: 'test!', shouldMatch: false },
           { text: 'hello', shouldMatch: false }
         ],
-        solution: '\\w+(?=@)',
+        solution: '\\\\w+(?=@)',
         hints: [
           'Use (?=) for positive lookahead',
           'Match words followed by @',
@@ -517,7 +517,7 @@ export const curriculum: Module[] = [
           { text: 'document.pdf', shouldMatch: true },
           { text: 'script.txt', shouldMatch: false }
         ],
-        solution: '\\w+\\.(?!txt)',
+        solution: '\\\\w+\\\\.(?!txt)',
         hints: [
           'Use (?!) for negative lookahead',
           'Match filenames NOT ending with .txt',
@@ -534,7 +534,7 @@ export const curriculum: Module[] = [
           { text: '€100', shouldMatch: false },
           { text: '100', shouldMatch: false }
         ],
-        solution: '(?<=\\$)\\d+',
+        solution: '(?<=\\\\$)\\\\d+',
         hints: [
           'Use (?<=) for positive lookbehind',
           'Match numbers preceded by $',
@@ -576,7 +576,7 @@ export const curriculum: Module[] = [
           { text: 'user@', shouldMatch: false },
           { text: 'user@domain', shouldMatch: false }
         ],
-        solution: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$',
+        solution: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$',
         hints: [
           'Username: letters, numbers, _.+-',
           'Domain: letters, numbers, hyphens',
@@ -752,7 +752,7 @@ export const curriculum: Module[] = [
           { text: '<div>content</span>', shouldMatch: false },
           { text: '<div>content', shouldMatch: false }
         ],
-        solution: '<([a-z]+)>.*?</\\1>',
+        solution: '<([a-zA-Z0-9]+)>.*?</\\1>',
         hints: [
           'Capture the tag name',
           'Use lazy quantifier for content',

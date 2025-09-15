@@ -36,23 +36,30 @@ const RegexInput = forwardRef<RegexInputRef, RegexInputProps>(({ lesson, onValid
       return;
     }
 
-    let regex;
+    // Check if pattern matches all test cases correctly
+    let correctCount = 0;
+    lesson.testStrings.forEach((testString) => {
+      try {
+        // Create a fresh regex instance for each test to avoid state persistence
+        const regex = new RegExp(inputPattern);
+        const matches = regex.test(testString.text);
+        if (matches === testString.shouldMatch) {
+          correctCount++;
+        }
+      } catch (e) {
+        // Invalid regex - will be caught below
+        return;
+      }
+    });
+
+    // Validate regex syntax
     try {
-      regex = new RegExp(inputPattern);
+      new RegExp(inputPattern);
     } catch (e) {
       setInputClass('error');
       onValidationChange(false);
       return;
     }
-
-    // Check if pattern matches all test cases correctly
-    let correctCount = 0;
-    lesson.testStrings.forEach((testString) => {
-      const matches = regex.test(testString.text);
-      if (matches === testString.shouldMatch) {
-        correctCount++;
-      }
-    });
 
     const totalCount = lesson.testStrings.length;
 
@@ -102,13 +109,13 @@ const RegexInput = forwardRef<RegexInputRef, RegexInputProps>(({ lesson, onValid
       'world$': ['world$'],
       '\\bcat\\b': ['\\bcat\\b'],
       '\\Bcat': ['\\Bcat'],
-      'ab*': ['ab*'],
+      '^ab*$': ['^ab*$'],
       'ab+': ['ab+'],
       'colou?r': ['colou?r'],
       '\\d{4}': ['\\d{4}', '[0-9]{4}'],
       '^\\d{2,4}$': ['^\\d{2,4}$', '^[0-9]{2,4}$'],
       '<.*?>': ['<.*?>'],
-      '(ab)+': ['(ab)+'],
+      '^(ab)+$': ['^(ab)+$'],
       '^(cat|dog)$': ['^(cat|dog)$', '^(dog|cat)$'],
       '^(?:https?://).*': ['^(?:https?://).*', '^(?:http|https)://.*'],
       '(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})': ['(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})'],
@@ -126,7 +133,7 @@ const RegexInput = forwardRef<RegexInputRef, RegexInputProps>(({ lesson, onValid
       '^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$': ['^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$'],
       '^([01][0-9]|2[0-3]):[0-5][0-9]$': ['^([01][0-9]|2[0-3]):[0-5][0-9]$'],
       '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$': ['^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$'],
-      '<([a-z]+)>.*?</\\1>': ['<([a-z]+)>.*?</\\1>']
+      '<([a-zA-Z0-9]+)>.*?</\\1>': ['<([a-zA-Z0-9]+)>.*?</\\1>']
     };
 
     // Check if user pattern is in the equivalent patterns for the solution
